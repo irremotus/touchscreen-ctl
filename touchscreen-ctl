@@ -1,0 +1,23 @@
+#!/bin/bash
+
+OUT=$(xinput | grep Touchscreen)
+RE='.*id=([0-9]+).*'
+[[ "$OUT" =~ $RE ]]
+ID=${BASH_REMATCH[1]}
+if [[ "$1" = "disable" || "$1" = "d" ]]; then
+	xinput disable $ID
+elif [[ "$1" = "enable" || "$1" = "e" ]]; then
+	xinput enable $ID
+elif [[ "$1" = "toggle" ]]; then
+	OUT=$(xinput list-props $ID | grep "Device Enabled")
+	RE='.*:.*([01]).*'
+	[[ "$OUT" =~ $RE ]]
+	ENABLED=${BASH_REMATCH[1]}
+	if [[ "$ENABLED" = "1" ]]; then
+		xinput disable $ID
+	else
+		xinput enable $ID
+	fi
+else
+	echo "Usage: touchscreen e(nable)|d(isable)|toggle"
+fi
