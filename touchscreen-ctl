@@ -19,5 +19,5 @@ elif [[ "$1" = "toggle" ]]; then
 		xinput enable $ID
 	fi
 else
-	echo "Usage: touchscreen e(nable)|d(isable)|toggle"
+	echo "Usage: $(basename $0) e(nable)|d(isable)|toggle"
 fi
